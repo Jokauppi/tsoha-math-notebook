@@ -21,18 +21,12 @@ def logout():
     del session["user_id"]
     del session["user_name"]
 
-def register(name, password):
-    print(1)
+def register(username, password):
     password_hash = generate_password_hash(password)
-    print(2)
     try:
-        print(3)
         sql = """INSERT INTO users (username, password) VALUES (:username, :password)"""
-        print(4)
-        db.session.execute(sql, {"username":name, "password":password_hash})
-        print(5)
+        db.session.execute(sql, {"username":username, "password":password_hash})
         db.session.commit()
     except:
         return False
-    print(6)
-    return login(name, password)
+    return login(username, password)
