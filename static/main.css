@@ -9,6 +9,12 @@ body {
   background-color: #e0e0e0;
 }
 
+hr {
+  margin: 0;
+  border: 0;
+  border-top: 2px solid darkgrey;
+}
+
 #content {
   display: flex;
   flex-direction: column;
@@ -28,4 +34,26 @@ body {
   color: rgb(180, 0, 0);
   background-color: rgb(255, 126, 126);
   border: 2px solid rgb(180, 0, 0);
+}
+
+#loggedin {
+  display: flex;
+  justify-content: space-between;
+}
+
+.notelist {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.notebook-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 1em;
+}
+
+.notebook-box:hover {
+  background-color: #eeeeee;
 }

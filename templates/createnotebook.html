@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block login %}
+
+  <div class="box">
+
+    {% include "login.html" %}
+
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  <div class="box">
+    <h3 style="margin-top: 0">Create New Notebook</h3>
+    <form action="/new/notebook" method="post">
+      <input type="text" name="title" id="notebook-name-field" style="width: 90%;" placeholder="notebook title" >
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <br>
+      <br>
+      <input type="submit" value="Create new">
+    </form>
+  </div>
+{% endblock %}

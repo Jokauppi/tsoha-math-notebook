@@ -4,37 +4,35 @@
 
   <div class="box">
 
-    {% if session.username %}
-      <div id="loggedin">
-        <div>Logged in As {{ session.username }}</div>
-        <form action="/logout" method="GET">
-          <input type="submit" value="Logout"/>
-        </form>
-      </div>
-    {% else %}
-    <h2 style="margin-top: 0;">Math Notebook</h2>
-    <form id="login" action="/login" method="POST">
-        <div>Username:<br>
-        <input type="text" name="username"></div>
-        <p>Password:<br>
-        <input type="password" name="password"></p>
-        <div>
-          <input type="submit" value="Login">
-          <input type="submit" form="register-link" value="Register"/>
-        </div>
-      </form>
-      <form id="register-link" action="/register" method="GET">
-      </form>
-    {% endif %}
+    {% include "login.html" %}
 
   </div>
 
 {% endblock %}
 
 {% block content %}
-  <div class="box">
-    <h3 style="margin-top: 0">Notebooks</h3>
-    <hr>
-    <p>notebook</p>
-  </div>
+  {% if session.username %}
+    <div class="box">
+      <div style="display: flex; justify-content: space-between;">
+        <h3 style="margin-top: 0">My Notebooks</h3>
+        <form action="/new/notebook" method="get">
+          <input type="submit" value="Create new">
+        </form>
+      </div>
+    
+      <hr>
+      <div class="notelist">
+      <p class="notebook-box">notebook</p>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3 style="margin-top: 0">Notebooks Shared With Me</h3>
+      
+      <hr>
+      <div class="notelist">
+        <div class="notebook-box">notebook</div>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
