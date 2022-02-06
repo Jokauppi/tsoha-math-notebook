@@ -1,7 +1,40 @@
 {% extends "layout.html" %}
+
 {% block login %}
-  <div class="box">login</div>
+
+  <div class="box">
+
+    {% if session.username %}
+      <div id="loggedin">
+        <div>Logged in As {{ session.username }}</div>
+        <form action="/logout" method="GET">
+          <input type="submit" value="Logout"/>
+        </form>
+      </div>
+    {% else %}
+    <h2 style="margin-top: 0;">Math Notebook</h2>
+    <form id="login" action="/login" method="POST">
+        <div>Username:<br>
+        <input type="text" name="username"></div>
+        <p>Password:<br>
+        <input type="password" name="password"></p>
+        <div>
+          <input type="submit" value="Login">
+          <input type="submit" form="register-link" value="Register"/>
+        </div>
+      </form>
+      <form id="register-link" action="/register" method="GET">
+      </form>
+    {% endif %}
+
+  </div>
+
 {% endblock %}
+
 {% block content %}
-  <div class="box">test</div>
+  <div class="box">
+    <h3 style="margin-top: 0">Notebooks</h3>
+    <hr>
+    <p>notebook</p>
+  </div>
 {% endblock %}
