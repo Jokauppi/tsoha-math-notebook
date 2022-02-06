@@ -1,5 +1,6 @@
 from app import app
-from flask import render_template, request, redirect
+from flask import redirect, render_template, request, session
+from services import users
 
 @app.route("/")
 def index():
@@ -10,10 +11,12 @@ def login():
     username = request.form["username"]
     password = request.form["password"]
     
-    # user & pass check  
+    if users.login(username, password):
+        session["username"] = username
+        return redirect("/")
 
-    session["username"] = username
-    return redirect("/")
+    return render_template("error.html", redirect="/", message="Invalid login")
+
 
 @app.route("/logout")
 def logout():
@@ -39,3 +42,7 @@ def register():
         if password != password_again:
             return render_template("error.html", redirect="/register", message="Passwords dont match")
 
+        if not users.register(username, password):
+            return render_template("error.html", redirect="/register", message="Registration failed")
+
+        return redirect("/")

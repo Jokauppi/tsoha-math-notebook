@@ -1,6 +1,6 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    username TEXT,
     password TEXT
 );
 
@@ -20,5 +20,5 @@ CREATE TABLE equations (
     id SERIAL PRIMARY KEY,
     content TEXT,
     page_id INTEGER REFERENCES pages,
-    order, INTEGER
+    order_num INTEGER
 );
