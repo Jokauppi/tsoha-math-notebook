@@ -11,9 +11,13 @@ def create(title, user):
 
 def get_all(user):
     try:
+        print(1)
         sql = """SELECT id, title FROM notebooks WHERE user_id=:user"""
+        print(2)
         result = db.session.execute(sql, {"user":user})
-        notebooks = result.fetchAll()
+        print(3)
+        notebooks = result.fetchall()
+        print(4)
     except:
         return []
     return notebooks

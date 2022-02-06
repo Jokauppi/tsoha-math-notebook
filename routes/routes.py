@@ -5,7 +5,10 @@ from services import notebooks
 
 @app.route("/")
 def index():
-    return render_template("index.html", title="Notebooks", notebooks=[(1, "palceholder")])
+    notebook_list = notebooks.get_all(users.user_id())
+    print(notebook_list)
+    print(users.user_id())
+    return render_template("index.html", title="Notebooks", notebooks=notebook_list)
 
 @app.route("/new/notebook",methods=["GET", "POST"])
 def new_notebook():

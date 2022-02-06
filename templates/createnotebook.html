@@ -18,7 +18,11 @@
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
       <br>
       <br>
-      <input type="submit" value="Create new">
+      <div>
+        <input type="submit" value="Create new">
+        <input type="submit" form="cancel-new-notebook" value="Cancel">
+      </div>
     </form>
+    <form id="cancel-new-notebook" action="/" method="get"></form>
   </div>
 {% endblock %}

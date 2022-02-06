@@ -22,8 +22,10 @@
     
       <div class="notelist">
         {% for notebook in notebooks %}
-          <hr>
-          <p class="notebook-box">{{ notebook[1] }}</p>
+          <div>
+            <hr>
+            <p class="notebook-box">{{ notebook[1] }}</p>
+          </div>  
         {% endfor %}
       </div>
     </div>

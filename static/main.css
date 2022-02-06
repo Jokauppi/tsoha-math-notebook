@@ -1,18 +1,35 @@
 body {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: #333333;
+  color: #555555;
   margin: 0;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: #e0e0e0;
+  background-color: #f0f0f0;
 }
 
 hr {
   margin: 0;
   border: 0;
-  border-top: 2px solid darkgrey;
+  border-top: 2px solid rgb(218, 218, 218);
+}
+
+input[type="button"],input[type="submit"] {
+  background-color: #e7e7e7;
+  border: 0;
+  padding: 0.5em 1em 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+input[type="button"]:active,input[type="submit"]:active {
+  background-color: #d6d6d6;
+}
+
+input[type="text"],input[type="password"] {
+  border: 2px solid #d1d1d1;
+  padding: 0.5em;
+  border-radius: 0.5em;
 }
 
 #content {
@@ -44,7 +61,6 @@ hr {
 .notelist {
   display: flex;
   flex-direction: column;
-  gap: 1em;
 }
 
 .notebook-box {
@@ -55,5 +71,5 @@ hr {
 }
 
 .notebook-box:hover {
-  background-color: #eeeeee;
+  background-color: #e8e8e8;
 }
