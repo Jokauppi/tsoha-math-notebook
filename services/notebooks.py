@@ -6,5 +6,14 @@ def create(title, user):
         db.session.execute(sql, {"title":title, "user":user})
         db.session.commit()
     except:
-        return 
+        return False
     return True
+
+def get_all(user):
+    try:
+        sql = """SELECT id, title FROM notebooks WHERE user_id=:user"""
+        result = db.session.execute(sql, {"user":user})
+        notebooks = result.fetchAll()
+    except:
+        return []
+    return notebooks

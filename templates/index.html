@@ -20,9 +20,11 @@
         </form>
       </div>
     
-      <hr>
       <div class="notelist">
-      <p class="notebook-box">notebook</p>
+        {% for notebook in notebooks %}
+          <hr>
+          <p class="notebook-box">{{ notebook.name }}</p>
+        {% endfor %}
       </div>
     </div>
 
@@ -31,7 +33,7 @@
       
       <hr>
       <div class="notelist">
-        <div class="notebook-box">notebook</div>
+        <div class="notebook-box">placeholder</div>
       </div>
     </div>
   {% endif %}
