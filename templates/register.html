@@ -4,15 +4,23 @@
     <h2 style="margin-top: 0;">Math Notebook</h2>
     <h4>Create new user</h4>
     <form action="/register" method="POST">
+
       <div>Username:<br>
       <input type="text" name="username"></div>
+
       <p>Password:<br>
-      <input type="password" name="password"></p>
+      <input type="password" name="password1"></p>
+
+      <p>Password again:<br>
+      <input type="password" name="password2"></p>
+
       <div>
         <input type="submit" value="Register">
         <input type="submit" form="home" value="Cancel"/>
       </div>
+
     </form>
+
     <form id="home" action="/" method="GET">
   </div>
 {% endblock %}

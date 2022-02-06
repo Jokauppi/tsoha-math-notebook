@@ -23,3 +23,9 @@ body {
   border: 2px solid #d1d1d1;
   border-radius: 0.5em;
 }
+
+#error {
+  color: rgb(180, 0, 0);
+  background-color: rgb(255, 126, 126);
+  border: 2px solid rgb(180, 0, 0);
+}

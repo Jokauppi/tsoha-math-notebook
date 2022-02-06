@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="box" id="error">
+    <p>{{ message }}</p>
+    <form action="{{ redirect }}" method="get">
+      <input type="submit" value="Return">
+    </form>
+  </div>
+{% endblock %}
