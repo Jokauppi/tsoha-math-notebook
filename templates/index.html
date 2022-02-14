@@ -22,9 +22,9 @@
     
       <div class="notelist">
         {% for notebook in notebooks %}
-          <div>
+          <div name="{{notebook[0]}}" onclick="open_notebook('{{notebook[0]}}')">
             <hr>
-            <p class="notebook-box">{{ notebook[1] }}</p>
+            <p class="notebook-box">{{ notebook[1]|e }}</p>
           </div>  
         {% endfor %}
       </div>
@@ -35,8 +35,19 @@
       
       <hr>
       <div class="notelist">
-        <div class="notebook-box">placeholder</div>
+        {% for notebook in shared_notebooks %}
+          <div name="{{notebook[0]}}" onclick="open_notebook('{{notebook[0]}}')">
+            <hr>
+            <p class="notebook-box">{{ notebook[1]|e }}</p>
+          </div>  
+        {% endfor %}
       </div>
     </div>
+
+    <script>
+      function open_notebook(notebook_id) {
+        window.location.href = `/notebook/${notebook_id}`
+      }
+    </script>
   {% endif %}
 {% endblock %}

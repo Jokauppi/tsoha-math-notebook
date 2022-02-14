@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block login %}
+
+  <div class="box">
+
+    {% include "login.html" %}
+
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  {% if session.username %}
+    <div class="box">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex;">
+          <button onclick="() => {window.location.href = '/'">&lt;</button>
+          <h2 style="margin-top: 0">{{notebook[1]}}</h2>
+        </div>
+        <div>
+          <button onclick="delete_notebook">Delete notebook</button>
+          <button onclick="new_page">Create new page</button>
+        </div>
+      </div>
+    
+      <div class="notelist">
+        {% for page in pages %}
+          <div name="{{page[0]}}" onclick="open_page('{{page[0]}}')">
+            <hr>
+            <p class="notebook-box">{{ page[1]|e }}</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <script>
+      function open_page(page_id) {
+        window.location.href = `/notebook/{{notebook_id}}/${page_id}`
+      }
+
+      function new_page() {
+        window.location.href = `/new/page/{{notebook_id}}`
+      }
+
+      function delete_notebook() {
+        xhttp.open("DELETE", "/notebook/{{notebook[0]}}", true);
+        xhttp.send(); 
+      }
+
+    </script>
+  {% endif %}
+{% endblock %}

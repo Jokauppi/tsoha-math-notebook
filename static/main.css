@@ -15,15 +15,15 @@ hr {
   border-top: 2px solid rgb(218, 218, 218);
 }
 
-input[type="button"],input[type="submit"] {
-  background-color: #e7e7e7;
-  border: 0;
+input[type="button"],input[type="submit"],button {
+  background-color: #ececec;
+  border: 2px solid #d1d1d1;
   padding: 0.5em 1em 0.5em 1em;
   border-radius: 0.5em;
 }
 
-input[type="button"]:active,input[type="submit"]:active {
-  background-color: #d6d6d6;
+input[type="button"]:active,input[type="submit"]:active,button:active {
+  background-color: #d1d1d1;
 }
 
 input[type="text"],input[type="password"] {

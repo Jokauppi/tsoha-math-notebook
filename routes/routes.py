@@ -2,12 +2,11 @@ from app import app
 from flask import redirect, render_template, request, session
 from services import users
 from services import notebooks
+from services import pages
 
 @app.route("/")
 def index():
     notebook_list = notebooks.get_all(users.user_id())
-    print(notebook_list)
-    print(users.user_id())
     return render_template("index.html", title="Notebooks", notebooks=notebook_list)
 
 @app.route("/new/notebook",methods=["GET", "POST"])
@@ -24,6 +23,39 @@ def new_notebook():
             return render_template("error.html", redirect="/", message="Notebook creation failed")
 
         return redirect("/")
+
+@app.route("/new/page",methods=["GET", "POST"])
+def new_page():
+    if request.method == "GET":
+        
+        return render_template("createpage.html", title="Notebooks")
+    
+    if request.method == "POST":
+    
+        users.check_csrf()
+
+        if not pages.create(request.form["title"], users.user_id()):
+            return render_template("error.html", redirect="/", message="Page creation failed")
+
+        return redirect("/")
+
+@app.route("/notebook/<notebook_id>",methods=["GET", "DELETE"])
+def notebook(notebook_id):
+
+    if request.method == "GET":
+        notebook = notebooks.get(notebook_id, users.user_id())
+
+        if notebook is None:
+            redirect("/")
+
+        pages_list = pages.get_all(notebook_id, users.user_id())
+
+        return render_template("notebook.html", notebook=notebook, pages=pages_list, title="{{notebook[1]}}")
+    if request.method == "DELETE":
+
+        if notebooks.delete(notebook_id, users.user_id()):
+            return render_template("error.html", redirect="/", message="Notebook creation failed")
+
 
 @app.route("/login",methods=["POST"])
 def login():
