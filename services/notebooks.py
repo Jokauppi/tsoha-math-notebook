@@ -1,4 +1,3 @@
-from operator import truediv
 from services.db import db
 
 def create(title, user):

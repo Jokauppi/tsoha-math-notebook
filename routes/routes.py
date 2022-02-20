@@ -39,10 +39,10 @@ def new_page(notebook_id):
     
         users.check_csrf()
 
-        if not pages.create(request.form["title"], users.user_id()):
+        if not pages.create(request.form["title"], notebook_id, users.user_id()):
             return render_template("error.html", redirect="/", message="Page creation failed")
 
-        return redirect("/")
+        return redirect(f"/notebook/{notebook_id}")
 
 @app.route("/notebook/<notebook_id>",methods=["GET", "DELETE"])
 def notebook(notebook_id):
@@ -56,13 +56,13 @@ def notebook(notebook_id):
         pages_list = pages.get_all(notebook_id, users.user_id())
 
         return render_template("notebook.html", notebook=notebook, pages=pages_list, title=notebook[1])
+
     if request.method == "DELETE":
 
         if not notebooks.delete(notebook_id, users.user_id()):
             return render_template("error.html", redirect="/", message="Notebook creation failed")
 
-        print("redirect")
-        return redirect("/")
+        return redirect("/", code=303)
 
 @app.route("/login",methods=["POST"])
 def login():

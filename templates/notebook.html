@@ -28,14 +28,14 @@
         </div>
       </div>
       <hr>
-      <h2 style="margin: 0; padding: 0.3em;">{{notebook[1]}}</h2>
+      <h2 style="margin: 0; padding: 0.3em;">{{notebook.title}}</h2>
       
     
       <div class="notelist">
         {% for page in pages %}
-          <div name="{{page[0]}}" onclick="open_page('{{page[0]}}')">
+          <div name="{{page.id}}" onclick="open_page('{{page.id}}')">
             <hr>
-            <p class="notebook-box">{{ page[1]|e }}</p>
+            <p class="notebook-box">{{ page.title|e }}</p>
           </div>
         {% endfor %}
       </div>
@@ -47,21 +47,16 @@
       }
 
       function open_page(page_id) {
-        window.location.href = `/notebook/{{notebook[0]}}/${page_id}`
+        window.location.href = `/notebook/{{notebook.id}}/${page_id}`
       }
 
       function new_page() {
-        window.location.href = `/notebook/{{notebook[0]}}/new_page`
+        window.location.href = `/notebook/{{notebook.id}}/new_page`
       }
 
       function delete_notebook() {
         const xhttp = new XMLHttpRequest()
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 302) {
-            window.location.href = `/`
-         }
-        }
-        xhttp.open("DELETE", "/notebook/{{notebook[0]}}", true)
+        xhttp.open("DELETE", "/notebook/{{notebook.id}}", true)
         xhttp.send();
       }
 
