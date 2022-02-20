@@ -13,7 +13,7 @@ def index():
 def new_notebook():
     if request.method == "GET":
         
-        return render_template("createnotebook.html", title="Notebooks")
+        return render_template("createnotebook.html", title="Create Notebook")
     
     if request.method == "POST":
     
@@ -24,11 +24,16 @@ def new_notebook():
 
         return redirect("/")
 
-@app.route("/new/page",methods=["GET", "POST"])
-def new_page():
+@app.route("/notebook/<notebook_id>/new_page/",methods=["GET", "POST"])
+def new_page(notebook_id):
     if request.method == "GET":
         
-        return render_template("createpage.html", title="Notebooks")
+        notebook = notebooks.get(notebook_id, users.user_id())
+
+        if notebook is None:
+            return redirect("/")
+
+        return render_template("createpage.html", notebook=notebook, title="Create Page")
     
     if request.method == "POST":
     
@@ -46,16 +51,18 @@ def notebook(notebook_id):
         notebook = notebooks.get(notebook_id, users.user_id())
 
         if notebook is None:
-            redirect("/")
+            return redirect("/")
 
         pages_list = pages.get_all(notebook_id, users.user_id())
 
-        return render_template("notebook.html", notebook=notebook, pages=pages_list, title="{{notebook[1]}}")
+        return render_template("notebook.html", notebook=notebook, pages=pages_list, title=notebook[1])
     if request.method == "DELETE":
 
-        if notebooks.delete(notebook_id, users.user_id()):
+        if not notebooks.delete(notebook_id, users.user_id()):
             return render_template("error.html", redirect="/", message="Notebook creation failed")
 
+        print("redirect")
+        return redirect("/")
 
 @app.route("/login",methods=["POST"])
 def login():

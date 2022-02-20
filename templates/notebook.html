@@ -13,16 +13,23 @@
 {% block content %}
   {% if session.username %}
     <div class="box">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1em;
+        ">
         <div style="display: flex;">
-          <button onclick="() => {window.location.href = '/'">&lt;</button>
-          <h2 style="margin-top: 0">{{notebook[1]}}</h2>
+          <button onclick="back()">&lt;</button>
         </div>
         <div>
-          <button onclick="delete_notebook">Delete notebook</button>
-          <button onclick="new_page">Create new page</button>
+          <button onclick="delete_notebook()">Delete notebook</button>
+          <button onclick="new_page()">Create new page</button>
         </div>
       </div>
+      <hr>
+      <h2 style="margin: 0; padding: 0.3em;">{{notebook[1]}}</h2>
+      
     
       <div class="notelist">
         {% for page in pages %}
@@ -35,17 +42,27 @@
     </div>
 
     <script>
+      function back() {
+        window.location.href = '/'
+      }
+
       function open_page(page_id) {
-        window.location.href = `/notebook/{{notebook_id}}/${page_id}`
+        window.location.href = `/notebook/{{notebook[0]}}/${page_id}`
       }
 
       function new_page() {
-        window.location.href = `/new/page/{{notebook_id}}`
+        window.location.href = `/notebook/{{notebook[0]}}/new_page`
       }
 
       function delete_notebook() {
-        xhttp.open("DELETE", "/notebook/{{notebook[0]}}", true);
-        xhttp.send(); 
+        const xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 302) {
+            window.location.href = `/`
+         }
+        }
+        xhttp.open("DELETE", "/notebook/{{notebook[0]}}", true)
+        xhttp.send();
       }
 
     </script>

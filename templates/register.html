@@ -16,11 +16,17 @@
 
       <div>
         <input type="submit" value="Register">
-        <input type="submit" form="home" value="Cancel"/>
+        <button onclick="back(event)">Cancel</button>
       </div>
 
     </form>
 
-    <form id="home" action="/" method="GET">
   </div>
+
+  <script>
+    function back(event) {
+      event.preventDefault()
+      window.location.href = '/'
+    }
+  </script>
 {% endblock %}

@@ -1,3 +1,4 @@
+from operator import truediv
 from services.db import db
 
 def create(title, user):
@@ -26,3 +27,12 @@ def get(notebook_id, user):
     except:
         return ()
     return notebook
+
+def delete(notebook_id, user):
+    try:
+        sql = """DELETE FROM notebooks WHERE user_id=:user AND id=:notebook_id"""
+        db.session.execute(sql, {"user":user, "notebook_id":notebook_id})
+        db.session.commit()
+    except:
+        return False
+    return True

@@ -13,11 +13,9 @@
 {% block content %}
   {% if session.username %}
     <div class="box">
-      <div style="display: flex; justify-content: space-between;">
-        <h3 style="margin-top: 0">My Notebooks</h3>
-        <form action="/new/notebook" method="get">
-          <input type="submit" value="Create new">
-        </form>
+      <div style="display: flex; justify-content: space-between; padding-bottom: 1em;">
+        <h2 style="margin: 0">My Notebooks</h2>
+        <button onclick="new_notebook()">Create new notebook</button>
       </div>
     
       <div class="notelist">
@@ -31,7 +29,7 @@
     </div>
 
     <div class="box">
-      <h3 style="margin-top: 0">Notebooks Shared With Me</h3>
+      <h2 style="margin-top: 0">Notebooks Shared With Me</h2>
       
       <hr>
       <div class="notelist">
@@ -47,6 +45,10 @@
     <script>
       function open_notebook(notebook_id) {
         window.location.href = `/notebook/${notebook_id}`
+      }
+
+      function new_notebook() {
+        window.location.href = `/new/notebook`
       }
     </script>
   {% endif %}

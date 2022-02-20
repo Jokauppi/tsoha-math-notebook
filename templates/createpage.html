@@ -12,9 +12,10 @@
 
 {% block content %}
   <div class="box">
-    <h3 style="margin-top: 0">Create New Notebook</h3>
-    <form action="/new/notebook" method="post">
-      <input type="text" name="title" id="notebook-name-field" style="width: 90%;" placeholder="notebook title" >
+    <h3 style="margin-top: 0; margin-bottom: 0.5em;">Create New Page</h3>
+    <p style="margin-top: 0;">In Notebook "{{notebook.id}}"</p>
+    <form action="/notebook/{{notebook.id}}/new_page" method="post">
+      <input type="text" name="title" id="page-name-field" style="width: 90%;" placeholder="page title" >
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
       <br>
       <br>
@@ -28,7 +29,7 @@
   <script>
     function back(event) {
       event.preventDefault()
-      window.location.href = '/'
+      window.location.href = '/notebook/{{notebook.id}}'
     }
   </script>
 {% endblock %}
