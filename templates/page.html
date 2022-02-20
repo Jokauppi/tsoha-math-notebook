@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block login %}
+
+  <div class="box">
+
+    {% include "login.html" %}
+
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  {% if session.username %}
+    <div class="box">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1em;
+        ">
+        <div style="display: flex;">
+          <button onclick="back()">&lt;</button>
+        </div>
+        <div>
+          <button onclick="delete_page()">Delete Page</button>
+        </div>
+      </div>
+      <hr>
+      <h2 style="margin: 0; padding: 0.3em;">{{page.title}}</h2>
+      
+    
+      <div class="eq-list">
+        {% for eq in equations %}
+          <div name="{{eq.id}}" order="{{eq.order_num}}" onclick="open_eq(event)">
+            <hr>
+            <div class="eq-box">
+              <textarea style="
+                width: 100%;
+                height: auto;
+                resize: vertical;
+              ">{{ eq.content|e }}</textarea>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <script>
+      function back() {
+        window.location.href = '/notebook/{{notebook_id}}'
+      }
+
+      function delete_page() {
+        const xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function () {
+          if (xhttp.readyState === 4) {
+            window.location.href = '/notebook/{{notebook_id}}'
+          }
+        }
+        xhttp.open('DELETE', '/notebook/{{notebook_id}}/{{page.id}}', true)
+        xhttp.send();
+      }
+
+    </script>
+  {% endif %}
+{% endblock %}

@@ -77,7 +77,7 @@ def page(notebook_id, page_id):
         if page is None:
             return redirect("/")
 
-        equation_list = equations.get_all(notebook_id, page_id, users.user_id())
+        equation_list = equations.get_all(page_id, users.user_id())
 
         if equation_list is None:
             return redirect("/")

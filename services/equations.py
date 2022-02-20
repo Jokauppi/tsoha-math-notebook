@@ -1,0 +1,34 @@
+from services.db import db
+
+def create(content, page_id, after_id, type):
+
+    print("1")
+    print(type)
+    if type != "t" and "m":
+      return False
+
+    print(content, page_id, after_id, type)
+
+    try:
+        sql = """INSERT INTO equations (content, page_id, order_num, type) VALUES (:content, :page, :order, :type)"""
+        db.session.execute(sql, {"content":content, "page":page_id, "order": after_id + 1, "type": type})
+        print("2")
+        db.session.commit()
+        print("3")
+    except:
+        return False
+    return True
+
+def get_all(page_id, user_id):
+    try:
+        sql = """SELECT equations.id, content
+          FROM equations
+          INNER JOIN pages ON page_id = pages.id
+          INNER JOIN notebooks ON notebook_id = notebooks.id
+          WHERE user_id=:user AND pages.id=:page
+          ORDER BY order_num"""
+        result = db.session.execute(sql, {"user":user_id, "page":page_id})
+        notebooks = result.fetchall()
+    except:
+        return None
+    return notebooks
