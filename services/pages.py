@@ -22,5 +22,5 @@ def get_all(notebook_id, user_id):
         result = db.session.execute(sql, {"user":user_id, "notebook_id":notebook_id})
         notebooks = result.fetchall()
     except:
-        return []
+        return None
     return notebooks

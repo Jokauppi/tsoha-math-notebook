@@ -35,7 +35,14 @@
         {% for page in pages %}
           <div name="{{page.id}}" onclick="open_page('{{page.id}}')">
             <hr>
-            <p class="notebook-box">{{ page.title|e }}</p>
+            <div class="notebook-box" style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            ">
+              <div>{{ page.title|e }}</div>
+              <div>{{ page.modified|e }}</div>
+            </div>
           </div>
         {% endfor %}
       </div>
@@ -56,7 +63,12 @@
 
       function delete_notebook() {
         const xhttp = new XMLHttpRequest()
-        xhttp.open("DELETE", "/notebook/{{notebook.id}}", true)
+        xhttp.onreadystatechange = function () {
+          if (xhttp.readyState === 4) {
+            window.location.href = '/'
+          }
+        }
+        xhttp.open('DELETE', '/notebook/{{notebook.id}}', true)
         xhttp.send();
       }
 

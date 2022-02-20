@@ -14,7 +14,7 @@
   <div class="box">
     <h3 style="margin-top: 0; margin-bottom: 0.5em;">Create New Page</h3>
     <p style="margin-top: 0;">In Notebook "{{notebook.title}}"</p>
-    <form action="/notebook/{{notebook.id}}/new_page" method="post">
+    <form action="/notebook/{{notebook.id}}/new_page/" method="post">
       <input type="text" name="title" id="page-name-field" style="width: 90%;" placeholder="page title" >
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
       <br>

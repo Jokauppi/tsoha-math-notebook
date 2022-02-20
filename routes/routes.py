@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, session
 from services import users
 from services import notebooks
 from services import pages
+from services import equations
 
 @app.route("/")
 def index():
@@ -53,14 +54,37 @@ def notebook(notebook_id):
         if notebook is None:
             return redirect("/")
 
-        pages_list = pages.get_all(notebook_id, users.user_id())
+        page_list = pages.get_all(notebook_id, users.user_id())
 
-        return render_template("notebook.html", notebook=notebook, pages=pages_list, title=notebook[1])
+        if page_list is None:
+            return redirect("/")
+
+        return render_template("notebook.html", notebook=notebook, pages=page_list, title=notebook[1])
 
     if request.method == "DELETE":
 
         if not notebooks.delete(notebook_id, users.user_id()):
             return render_template("error.html", redirect="/", message="Notebook creation failed")
+
+        return redirect("/", code=303)
+
+@app.route("/notebook/<notebook_id>/<page_id>",methods=["GET", "DELETE"])
+def page(notebook_id, page_id):
+
+    if request.method == "GET":
+        page = pages.get(page_id, users.user_id())
+
+        if page is None:
+            return redirect("/")
+
+        equation_list = equations.get_all(notebook_id, page_id, users.user_id())
+
+        if equation_list is None:
+            return redirect("/")
+
+        return render_template("page.html", notebook_id=notebook_id, page=page, equations=equation_list, title=page.title)
+
+    if request.method == "DELETE":
 
         return redirect("/", code=303)
 
