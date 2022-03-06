@@ -27,8 +27,17 @@
         </div>
       </div>
       <hr>
+      <button onclick="toggleShare(event)" style="margin: 1em 0 1em 0;">Share page</button>
+      <div class="share-menu" style="display: none;">
+        {% for usr in users %}
+          <div style="margin-bottom: 1em;">
+            <input type="checkbox" user="{{usr}}" oninput="sharePage(event)">
+            <label for="{{usr}}">{{usr | e}}</label>
+          </div>
+        {% endfor %}
+      </div>
+      <hr>
       <h2 style="margin: 0; padding: 0.3em;">{{page.title}}</h2>
-      
     
       <div class="eq-list">
         {% for eq in equations %}
@@ -132,7 +141,7 @@
             
             new_eq.querySelector('.edit-box').innerText = equation.content
             new_eq.querySelector('.display-box').innerText = `$$${equation.content}$$`
-            
+
             document.querySelector(`[order='${equation.after}']`).after(new_eq)
 
             MathJax.typeset()
@@ -140,7 +149,7 @@
           }
         }
 
-        xhttp.open('POST', `/notebook/{{notebook_id}}/{{page.id}}/${element.getAttribute("name")}`, true)
+        xhttp.open('POST', `/notebook/{{notebook_id}}/{{page.id}}/${element.getAttribute("order")}`, true)
         xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
         
         const data = {
@@ -151,6 +160,26 @@
         xhttp.send(JSON.stringify(data));
       }
 
+      function sharePage(event) {
+        
+        const shareto = event.target.getAttribute("user")
+        
+        if (event.target.checked) {
+          const xhttp = new XMLHttpRequest()
+          xhttp.open('POST', `/share/{{notebook_id}}/{{page.id}}/${shareto}`, true)
+          xhttp.send()
+        } else {
+          const xhttp = new XMLHttpRequest()
+          xhttp.open('DELETE', `/share/{{notebook_id}}/{{page.id}}/${shareto}`, true)
+          xhttp.send()
+        }
+      }
+
+      function toggleShare(event) {
+        const menu = document.querySelector(".share-menu")
+        menu.style.display = menu.style.display === 'none' ? 'block' : 'none'
+      }
+      
     </script>
   {% endif %}
 {% endblock %}

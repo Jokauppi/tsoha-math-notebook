@@ -5,6 +5,7 @@ from services import users
 from services import notebooks
 from services import pages
 from services import equations
+from services import share
 
 @app.route("/")
 def index():
@@ -77,13 +78,16 @@ def page(notebook_id, page_id):
 
         if page is None:
             return redirect("/")
+        
+        user_list = list(map(lambda u: u[0], users.get_all()))
+        user_list.remove(users.get_name(users.user_id()))
 
         equation_list = equations.get_all(page_id, users.user_id())
 
         if equation_list is None:
             return redirect("/")
 
-        return render_template("page.html", notebook_id=notebook_id, page=page, equations=equation_list, title=page.title, eq_toggle=True)
+        return render_template("page.html", users=user_list, notebook_id=notebook_id, page=page, equations=equation_list, title=page.title, eq_toggle=True)
 
     if request.method == "DELETE":
 
@@ -122,6 +126,25 @@ def equation(notebook_id, page_id, eq_id):
             return render_template("error.html", redirect="/", message="Equation deletion failed")
 
         return jsonify(success=True)
+
+@app.route("/share/<notebook_id>/<page_id>/<user_name>",methods=["POST", "DELETE"])
+def sharepage(notebook_id, page_id, user_name):
+
+    page = pages.get(page_id, users.user_id())
+
+    if page is None:
+        return redirect(f"/notebook/{notebook_id}/{page_id}")
+
+    if request.method == "POST":
+
+        if share.add(page_id, user_name):
+        
+            return jsonify(success=True)
+
+    if request.method == "DELETE":
+
+        if share.remove(page_id, user_name):
+            return jsonify(success=True)
 
 @app.route("/login",methods=["POST"])
 def login():
