@@ -11,6 +11,5 @@ Sovellus löytyy osoitteesta [math-notebook.herokuapp.com](https://math-notebook
 - Käyttäjä näkee muistikirjojen sisältämät sivut
 - Käyttäjä pystyy luomaan uusia muistikirjoja ja sivuja
 - Käyttäjä voi lisätä omien muistikirjojensa sivuihin uusia yhtälölaatikoita
-- käyttäjä voi poistaa laatikoita
 - Käyttäjä voi jakaa muistikirjoja tai sivuja muiden käyttäjien nähtäväksi
 - Käyttäjä voi poistaa muistikirjojaan tai niissä olevia sivuja
