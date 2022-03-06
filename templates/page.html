@@ -71,6 +71,7 @@
         const content = `$$${event.target.value}$$`
         event.target.parentElement.querySelector(".display-box").innerText = content
         MathJax.typeset()
+
       }
 
       function focusBlock(element) {
@@ -79,14 +80,32 @@
       }
 
       function unfocusBlock(element) {
+        console.log('unfocus')
         element.style.display = "none"
+
+        const xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = function () {
+          if (xhttp.readyState == 4 && xhttp.status == "200") {
+            console.log('change')
+          }
+        }
+
+        xhttp.open('PUT', `/notebook/{{notebook_id}}/{{page.id}}/${element.parentElement.parentElement.getAttribute("name")}`, true)
+        xhttp.setRequestHeader('Content-type','application/json; charset=utf-8');
+        
+        const data = {
+          content: element.value,
+          type: 't'
+        }
+        
+        xhttp.send(JSON.stringify(data));
       }
 
       function nextBlock(event) {
 
       }
 
-      function newBlvock(event) {
+      function newBlock(event) {
 
       }
 

@@ -1,5 +1,6 @@
+import json
 from app import app
-from flask import redirect, render_template, request, session
+from flask import redirect, render_template, request, session, jsonify
 from services import users
 from services import notebooks
 from services import pages
@@ -90,6 +91,28 @@ def page(notebook_id, page_id):
             return render_template("error.html", redirect="/", message="Page deletion failed")
 
         return redirect("/", code=303)
+
+@app.route("/notebook/<notebook_id>/<page_id>/<eq_id>",methods=["POST", "PUT", "DELETE"])
+def equation(notebook_id, page_id, eq_id):
+
+    if request.method == "POST":
+        pass
+
+    if request.method == "PUT":
+
+        data = json.loads(request.data)
+
+        if not equations.change(data["content"], eq_id, data["type"], users.user_id()):
+            return jsonify(success=False)
+
+        return jsonify(success=True)
+
+    if request.method == "DELETE":
+
+        if not equations.delete(eq_id, users.user_id()):
+            return render_template("error.html", redirect="/", message="Equation deletion failed")
+
+        return jsonify(success=True)
 
 @app.route("/login",methods=["POST"])
 def login():

@@ -29,5 +29,16 @@ def get_all(page_id, user_id):
         return None
     return notebooks
 
-def change(content, eq_id, type):
-    pass
+def change(content, eq_id, type, user_id):
+
+    try:
+        sql = """UPDATE equations e
+        SET content=:content, type=:type
+        FROM (SELECT pages.id, user_id FROM pages INNER JOIN notebooks ON notebook_id = notebooks.id) p
+        WHERE e.id = :eq AND page_id = p.id AND p.user_id = :user"""
+        db.session.execute(sql, {"content":content, "type":type, "eq":eq_id, "user":user_id})
+        db.session.commit()
+    except:
+        return False
+    
+    return True
