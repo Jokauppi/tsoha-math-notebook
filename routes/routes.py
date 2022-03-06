@@ -96,7 +96,16 @@ def page(notebook_id, page_id):
 def equation(notebook_id, page_id, eq_id):
 
     if request.method == "POST":
-        pass
+        data = json.loads(request.data)
+
+        equation = equations.create(data["content"], page_id, eq_id, data["type"], users.user_id())
+
+        if not equation:
+            return jsonify({"success": False}), 400
+
+        response_json = equation._asdict()
+        response_json["after"] = eq_id
+        return jsonify(response_json)
 
     if request.method == "PUT":
 

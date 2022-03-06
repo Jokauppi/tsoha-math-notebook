@@ -17,7 +17,7 @@ def create(title, notebook_id, user_id):
         except:
             return False
         
-        if not equations.create("\\text{LaTeX}", page.id, 0, "t"):
+        if not equations.create("\\text{LaTeX}", page.id, 0, "t", user_id):
             try:
                 delete(page.id, user_id)
             except:
