@@ -74,6 +74,8 @@ def notebook(notebook_id):
     if request.method == "GET":
         notebook = notebooks.get(notebook_id, users.user_id())
 
+        print(notebook)
+
         if notebook is None:
             return redirect("/")
 
