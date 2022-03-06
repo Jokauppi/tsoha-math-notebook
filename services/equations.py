@@ -2,8 +2,6 @@ from services.db import db
 
 def create(content, page_id, after_id, type):
 
-    print("1")
-    print(type)
     if type != "t" and "m":
       return False
 
@@ -12,9 +10,7 @@ def create(content, page_id, after_id, type):
     try:
         sql = """INSERT INTO equations (content, page_id, order_num, type) VALUES (:content, :page, :order, :type)"""
         db.session.execute(sql, {"content":content, "page":page_id, "order": after_id + 1, "type": type})
-        print("2")
         db.session.commit()
-        print("3")
     except:
         return False
     return True
@@ -32,3 +28,6 @@ def get_all(page_id, user_id):
     except:
         return None
     return notebooks
+
+def change(content, eq_id, type):
+    pass

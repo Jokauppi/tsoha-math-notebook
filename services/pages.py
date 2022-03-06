@@ -17,7 +17,7 @@ def create(title, notebook_id, user_id):
         except:
             return False
         
-        if not equations.create("", page.id, 0, "t"):
+        if not equations.create("\\text{LaTeX}", page.id, 0, "t"):
             try:
                 delete(page.id, user_id)
             except:
@@ -47,4 +47,12 @@ def get_all(notebook_id, user_id):
     return notebooks
 
 def delete(page_id, user_id):
-    print(f"delete {page_id} {user_id}")
+    if get(page_id, user_id) != None:
+        try:
+            sql = """DELETE FROM pages WHERE id=:page_id"""
+            db.session.execute(sql, {"page_id":page_id})
+            db.session.commit()
+        except:
+            return False
+        return True
+    return False

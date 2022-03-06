@@ -24,3 +24,8 @@ CREATE TABLE equations (
     order_num INTEGER,
     type VARCHAR(1)
 );
+
+CREATE TABLE access (
+    user_id INTEGER NOT NULL REFERENCES users ON DELETE CASCADE,
+    page_id INTEGER NOT NULL REFERENCES pages ON DELETE CASCADE
+);

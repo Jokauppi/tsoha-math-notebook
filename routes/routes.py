@@ -64,7 +64,7 @@ def notebook(notebook_id):
     if request.method == "DELETE":
 
         if not notebooks.delete(notebook_id, users.user_id()):
-            return render_template("error.html", redirect="/", message="Notebook creation failed")
+            return render_template("error.html", redirect="/", message="Notebook deletion failed")
 
         return redirect("/", code=303)
 
@@ -82,9 +82,12 @@ def page(notebook_id, page_id):
         if equation_list is None:
             return redirect("/")
 
-        return render_template("page.html", notebook_id=notebook_id, page=page, equations=equation_list, title=page.title)
+        return render_template("page.html", notebook_id=notebook_id, page=page, equations=equation_list, title=page.title, eq_toggle=True)
 
     if request.method == "DELETE":
+
+        if not pages.delete(page_id, users.user_id()):
+            return render_template("error.html", redirect="/", message="Page deletion failed")
 
         return redirect("/", code=303)
 

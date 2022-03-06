@@ -32,14 +32,19 @@
     
       <div class="eq-list">
         {% for eq in equations %}
-          <div name="{{eq.id}}" order="{{eq.order_num}}" onclick="open_eq(event)">
-            <hr>
-            <div class="eq-box">
-              <textarea style="
-                width: 100%;
-                height: auto;
-                resize: vertical;
-              ">{{ eq.content|e }}</textarea>
+          <div name="{{eq.id}}" order="{{eq.order_num}}">
+            <div class="eq-box" onclick="focusBlock(this)" >
+              <textarea onfocusout="unfocusBlock(this)"
+                class="edit-box"  
+                style="
+                  display: none;
+                  width: 100%;
+                  height: auto;
+                  resize: vertical;"
+                placeholder="Type here"
+                oninput="blockChange(event)"
+                >{{ eq.content|e }}</textarea>
+                <div class="display-box">$${{ eq.content|e }}$$</div>
             </div>
           </div>
         {% endfor %}
@@ -60,6 +65,29 @@
         }
         xhttp.open('DELETE', '/notebook/{{notebook_id}}/{{page.id}}', true)
         xhttp.send();
+      }
+
+      function blockChange(event) {
+        const content = `$$${event.target.value}$$`
+        event.target.parentElement.querySelector(".display-box").innerText = content
+        MathJax.typeset()
+      }
+
+      function focusBlock(element) {
+        element.parentElement.querySelector(".edit-box").style.display = "inline-block"
+        element.parentElement.querySelector(".edit-box").focus()
+      }
+
+      function unfocusBlock(element) {
+        element.style.display = "none"
+      }
+
+      function nextBlock(event) {
+
+      }
+
+      function newBlvock(event) {
+
       }
 
     </script>
