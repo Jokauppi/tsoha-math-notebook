@@ -29,7 +29,13 @@
       <hr>
       <button onclick="toggleShare(event)" style="margin: 1em 0 1em 0;">Share page</button>
       <div class="share-menu" style="display: none;">
-        {% for usr in users %}
+        {% for usr in sharedusers %}
+          <div style="margin-bottom: 1em;">
+            <input type="checkbox" user="{{usr}}" oninput="sharePage(event)" checked>
+            <label for="{{usr}}">{{usr | e}}</label>
+          </div>
+        {% endfor %}
+        {% for usr in notsharedusers %}
           <div style="margin-bottom: 1em;">
             <input type="checkbox" user="{{usr}}" oninput="sharePage(event)">
             <label for="{{usr}}">{{usr | e}}</label>
