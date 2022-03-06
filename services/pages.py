@@ -30,7 +30,11 @@ def create(title, notebook_id, user_id):
 
 def get(page_id, user_id):
     try:
-        sql = """SELECT pages.id, pages.title FROM pages INNER JOIN notebooks ON notebook_id = notebooks.id WHERE user_id=:user AND pages.id=:page_id"""
+        sql = """SELECT pages.id, pages.title
+        FROM pages
+        INNER JOIN notebooks ON notebook_id = notebooks.id
+        LEFT JOIN access ON page_id = pages.id
+        WHERE (notebooks.user_id=:user OR access.user_id=:user) AND pages.id=:page_id"""
         result = db.session.execute(sql, {"user":user_id, "page_id":page_id})
         page = result.fetchone()
     except:

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block login %}
+
+  <div class="box">
+
+    {% include "login.html" %}
+
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  {% if session.username %}
+    <div class="box">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 1em;
+        ">
+        <div style="display: flex;">
+          <button onclick="back()">&lt;</button>
+        </div>
+      </div>
+      <hr>
+      <h2 style="margin: 0; padding: 0.3em;">{{notebook.title}}</h2>
+      
+    
+      <div class="notelist">
+        {% for page in pages %}
+          <div name="{{page.id}}" onclick="open_page('{{page.id}}')">
+            <hr>
+            <div class="notebook-box" style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            ">
+              <div>{{ page.title|e }}</div>
+              <div>{{ page.modified|e }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <script>
+      function back() {
+        window.location.href = '/'
+      }
+
+      function open_page(page_id) {
+        window.location.href = `/notebook/{{notebook.id}}/${page_id}`
+      }
+
+    </script>
+  {% endif %}
+{% endblock %}

@@ -34,7 +34,8 @@ def get_all(page_id, user_id):
         FROM equations
         INNER JOIN pages ON page_id = pages.id
         INNER JOIN notebooks ON notebook_id = notebooks.id
-        WHERE user_id=:user AND pages.id=:page
+        LEFT JOIN access ON access.page_id = pages.id
+        WHERE (notebooks.user_id=:user OR access.user_id=:user) AND pages.id=:page
         ORDER BY order_num"""
         result = db.session.execute(sql, {"user":user_id, "page":page_id})
         notebooks = result.fetchall()

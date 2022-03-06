@@ -62,8 +62,11 @@ def notebook(notebook_id):
         if page_list is None:
             return redirect("/")
 
-        return render_template("notebook.html", notebook=notebook, pages=page_list, title=notebook[1])
-
+        if share.is_own_notebook(notebook_id, users.user_id()):
+            return render_template("notebook.html", notebook=notebook, pages=page_list, title=notebook[1])
+        else:
+            return render_template("shared_notebook.html", notebook=notebook, pages=page_list, title=notebook[1])
+            
     if request.method == "DELETE":
 
         if not notebooks.delete(notebook_id, users.user_id()):
@@ -88,7 +91,10 @@ def page(notebook_id, page_id):
         if equation_list is None:
             return redirect("/")
 
-        return render_template("page.html", users=user_list, notebook_id=notebook_id, page=page, equations=equation_list, title=page.title, eq_toggle=True)
+        if share.is_own_page(page_id, users.user_id()):
+            return render_template("page.html", users=user_list, notebook_id=notebook_id, page=page, equations=equation_list, title=page.title, eq_toggle=True)
+        else:
+            return render_template("shared_page.html", notebook_id=notebook_id, page=page, equations=equation_list, title=page.title, eq_toggle=True)
 
     if request.method == "DELETE":
 
@@ -99,6 +105,9 @@ def page(notebook_id, page_id):
 
 @app.route("/notebook/<notebook_id>/<page_id>/<eq_id>",methods=["POST", "PUT", "DELETE"])
 def equation(notebook_id, page_id, eq_id):
+    
+    if not share.is_own_page(page_id, users.user_id()):
+        return redirect("/")
 
     if request.method == "POST":
         data = json.loads(request.data)
