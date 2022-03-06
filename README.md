@@ -7,10 +7,10 @@ Sovellus löytyy osoitteesta [math-notebook.herokuapp.com](https://math-notebook
 
 ## Ominaisuudet
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen
-- Käyttäjä näkee omat ja itselle jaetut muistikirjat sekä niiden viimeisen muokkauspäivän ja sivujen määrän
-- Käyttäjä näkee muistikirjojen sisältämät sivut, niiden viimeisen muokkauspäivän ja sivujen yhtälöiden määrän
+- Käyttäjä näkee omat ja itselle jaetut muistikirjat
+- Käyttäjä näkee muistikirjojen sisältämät sivut
 - Käyttäjä pystyy luomaan uusia muistikirjoja ja sivuja
-- Käyttäjä voi lisätä omien muistikirjojensa sivuihin tekstilaatikoita tai yhtälölaatikoita
-- käyttäjä voi muuttaa laatikoiden järjestystä ja poistaa niitä
+- Käyttäjä voi lisätä omien muistikirjojensa sivuihin uusia yhtälölaatikoita
+- käyttäjä voi poistaa laatikoita
 - Käyttäjä voi jakaa muistikirjoja tai sivuja muiden käyttäjien nähtäväksi
 - Käyttäjä voi poistaa muistikirjojaan tai niissä olevia sivuja
