@@ -30,3 +30,9 @@ def remove(page_id, username):
           return False
     else:
       return False
+
+def is_own_notebook(notebook_id, user_id):
+  pass
+
+def is_own_page(notebook_id, user_id):
+  pass

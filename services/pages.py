@@ -39,7 +39,11 @@ def get(page_id, user_id):
 
 def get_all(notebook_id, user_id):
     try:
-        sql = """SELECT pages.id, pages.title FROM pages INNER JOIN notebooks ON notebook_id = notebooks.id WHERE user_id=:user AND notebook_id=:notebook_id"""
+        sql = """SELECT pages.id, pages.title
+        FROM pages
+        INNER JOIN notebooks ON notebook_id = notebooks.id
+        LEFT JOIN access ON page_id = pages.id
+        WHERE (notebooks.user_id=:user OR access.user_id=:user) AND notebook_id=:notebook_id"""
         result = db.session.execute(sql, {"user":user_id, "notebook_id":notebook_id})
         notebooks = result.fetchall()
     except:
@@ -52,7 +56,8 @@ def delete(page_id, user_id):
             sql = """DELETE FROM pages WHERE id=:page_id"""
             db.session.execute(sql, {"page_id":page_id})
             db.session.commit()
-        except:
+        except Exception as err:
+            print(err)
             return False
         return True
     return False

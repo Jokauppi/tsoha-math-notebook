@@ -31,7 +31,6 @@
     <div class="box">
       <h2 style="margin-top: 0">Notebooks Shared With Me</h2>
       
-      <hr>
       <div class="notelist">
         {% for notebook in shared_notebooks %}
           <div name="{{notebook[0]}}" onclick="open_notebook('{{notebook[0]}}')">

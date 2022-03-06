@@ -10,7 +10,8 @@ from services import share
 @app.route("/")
 def index():
     notebook_list = notebooks.get_all(users.user_id())
-    return render_template("index.html", title="Notebooks", notebooks=notebook_list)
+    shared_notebook_list = notebooks.get_shared(users.user_id())
+    return render_template("index.html", title="Notebooks", notebooks=notebook_list, shared_notebooks=shared_notebook_list)
 
 @app.route("/new/notebook",methods=["GET", "POST"])
 def new_notebook():

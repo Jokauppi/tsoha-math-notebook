@@ -18,12 +18,30 @@ def get_all(user):
         return []
     return notebooks
 
+def get_shared(user):
+    try:
+        sql = """SELECT DISTINCT notebooks.id, notebooks.title
+        FROM notebooks
+        INNER JOIN pages ON notebook_id = notebooks.id
+        INNER JOIN access ON page_id = pages.id
+        WHERE access.user_id=:user"""
+        result = db.session.execute(sql, {"user":user})
+        notebooks = result.fetchall()
+    except:
+        return []
+    return notebooks
+
 def get(notebook_id, user):
     try:
-        sql = """SELECT id, title FROM notebooks WHERE user_id=:user AND id=:notebook_id"""
+        sql = """SELECT notebooks.id, notebooks.title
+        FROM notebooks
+        INNER JOIN pages ON notebook_id = notebooks.id
+        LEFT JOIN access ON page_id = pages.id
+        WHERE (notebooks.user_id = :user OR access.user_id = :user) AND notebooks.id=:notebook_id"""
         result = db.session.execute(sql, {"user":user, "notebook_id":notebook_id})
         notebook = result.fetchone()
-    except:
+    except Exception as err:
+        print(err)
         return ()
     return notebook
 
